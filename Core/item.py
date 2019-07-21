@@ -12,6 +12,8 @@ class ItemType(object):
             self.desc = desc
             self.guid = guid or get_guid()
     
+    # TODO remove from here - managing should be done in none-singletone objects
+    #      even if I decide to use singletone - the implementation of it should be Singletone.member = Imp()
     @classmethod
     def add_type(cls, info=None):
         try:
@@ -27,7 +29,7 @@ class ItemType(object):
         except Exception:
             pass
 
-def ItemGroup(object):
+class ItemGroup(object):
     def __init__(self, name='', entries=None):
         self.name = name
         self.entries = entries or []
@@ -37,7 +39,7 @@ def ItemGroup(object):
         entries = []
         for g in groups or ():
             entries += g.entries
-        return ItemGroup(name, entries)
+        return cls(name, entries)
 
 class ItemEntryData(object):
     def __init__(self, serial='', category_num='', other=''):
@@ -45,7 +47,7 @@ class ItemEntryData(object):
         self.category_num = category_num
         self.other = other
 
-class ItemCounting(object):
+class AtomicItemCounting(object):
     def __init__(self, item_type=None, entries=None, note=''):
         self.type = item_type or ItemType()
         self.entries = entries or []

@@ -4,13 +4,17 @@
 from Core import item
 
 class Zone(object):
-    def __init__(self, name='', sub_zones=None, item_list=None, desc='', gps_location=None, icon=None):
-        self.name = name
+    class ZoneInfo(object):
+        def __init__(self, name='', item_counting=None, desc='', gps_location=None, icon=None):
+            self.name = name
+            self.item_counting = item_counting or item.AtomicItemCounting()
+            self.desc = desc
+            self.gps_location = None
+            self.icon = None
+
+    def __init__(self, info=None, sub_zones=None):
+        self.info = info or self.ZoneInfo()
         self.sub_zones = sub_zones or []
-        self.item_counting = item_list or item.ItemCounting()
-        self.desc = desc
-        self.gps_location = None
-        self.icon = None
 
     def add_sub_zone(self, zone=None):
         assert self.allowed_sub_zones(), 'Cannot add sub zones because there are assigned items'
@@ -23,7 +27,7 @@ class Zone(object):
     @property
     def items_counting(self):
         assert self.allowed_items(), 'Cannot handle items because there are assigned sub zones'
-        return self.item_counting
+        return self.info.item_counting
 
     def is_leaf(self):
         return len(self.sub_zones) == 0
@@ -32,7 +36,7 @@ class Zone(object):
         return self.is_leaf()
 
     def allowed_sub_zones(self):
-        return self.item_counting.count() == 0
+        return self.info.item_counting.count() == 0
     
 class ZoneWizard(object):
     @classmethod
