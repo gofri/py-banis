@@ -2,19 +2,35 @@
 # encoding: utf-8
 
 from .guid import get_guid
-
+# Unique - item types remain the same throught the program
+#          Once updated, all dependent data type should be updated
 class ItemType(object):
-    def __init__(self, name='', icon=None, desc='', guid=None):
-        self.name = name
-        self.icon = icon
-        self.desc = desc
-        self.guid = guid or get_guid()
+    class ItemTypeInfo(object):
+        def __init__(self, name='', icon=None, desc='', guid=None):
+            self.name = name
+            self.icon = icon
+            self.desc = desc
+            self.guid = guid or get_guid()
+    
+    @classmethod
+    def add_type(cls, info=None):
+        try:
+            cls.types.add(info or cls.ItemTypeInfo())
+        except AttributeError:
+            cls.types = []
+            cls.add_type(info)
+    
+    @classmethod
+    def remove_type(cls, guid):
+        try:
+            cls.types = list(filter(lambda t: t.guid != guid, cls.types))
+        except Exception:
+            pass
 
 def ItemGroup(object):
-    def __init__(self, name='', entries=None, guid=None):
+    def __init__(self, name='', entries=None):
         self.name = name
         self.entries = entries or []
-        self.guid = guid
 
     @classmethod
     def combine(cls, name='', groups=None):
