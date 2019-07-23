@@ -3,16 +3,25 @@
 
 from Core import item
 
+class Site(object):
+    class SiteInfo(object):
+        def __init__(self):
+            pass
+    
+    def __init__(self, info=None, zone=None):
+        self.info = info or self.SiteInfo()
+        self.zone = zone or Zone()
+        
 class Zone(object):
     class ZoneInfo(object):
-        def __init__(self, name='', item_counting=None, desc='', gps_location=None, icon=None):
-            self.name = name
+        def __init__(self, item_counting=None, desc='', gps_location=None, icon=None):
             self.item_counting = item_counting or item.AtomicItemCounting()
             self.desc = desc
             self.gps_location = None
             self.icon = None
 
-    def __init__(self, info=None, sub_zones=None):
+    def __init__(self, name='', info=None, sub_zones=None):
+        self.name = name
         self.info = info or self.ZoneInfo()
         self.sub_zones = sub_zones or []
 

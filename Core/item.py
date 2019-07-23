@@ -48,8 +48,8 @@ class ItemEntryData(object):
         self.other = other
 
 class AtomicItemCounting(object):
-    def __init__(self, item_type=None, entries=None, note=''):
-        self.type = item_type or ItemType()
+    def __init__(self, type_guid=None, entries=None, note=''):
+        self.type = type_guid 
         self.entries = entries or []
         self.note = note
     
