@@ -1,45 +1,47 @@
 #!/usr/bin/python3.6
 # encoding: utf-8
 
-from .guid import get_guid
-# Unique - item types remain the same throught the program
-#          Once updated, all dependent data type should be updated
-class ItemType(object):
-    class ItemTypeInfo(object):
-        def __init__(self, name='', icon=None, desc='', guid=None):
-            self.name = name
-            self.icon = icon
-            self.desc = desc
-            self.guid = guid or get_guid()
-    
-    # TODO remove from here - managing should be done in none-singletone objects
-    #      even if I decide to use singletone - the implementation of it should be Singletone.member = Imp()
-    @classmethod
-    def add_type(cls, info=None):
-        try:
-            cls.types.add(info or cls.ItemTypeInfo())
-        except AttributeError:
-            cls.types = []
-            cls.add_type(info)
-    
-    @classmethod
-    def remove_type(cls, guid):
-        try:
-            cls.types = list(filter(lambda t: t.guid != guid, cls.types))
-        except Exception:
-            pass
+from . import utils
+
+def ItemType():
+    def __init__(self, name='', icon=None, desc=''):
+        self.name = name
+        self.icon = icon
+        self.desc = desc
+
+### Grouping
 
 class ItemGroup(object):
     def __init__(self, name='', entries=None):
         self.name = name
         self.entries = entries or []
 
+    def move_entry(self, *args, **kwargs):
+        return utils.list_move_entry(self.entries, *args, **kwargs)
+
     @classmethod
-    def combine(cls, name='', groups=None):
-        entries = []
-        for g in groups or ():
-            entries += g.entries
-        return cls(name, entries)
+    def combine(cls, g1, g2, new_name=''):
+        return cls(name=new_name, entries=utils.unique_combine(g1.entries, g2.entries))
+
+class CommonItems(object):
+    def __init__(self, groups=None):
+        self.groups = groups or []
+
+    def append(self):
+        self.groups.append(ItemGroup())
+
+    def remove(self, index):
+        self.groups.pop(index)
+
+    def combine(self, g1_index, g2_index, *args, **kwargs):
+        g1 = self.groups[g1_index]
+        g2 = self.groups[g2_index]
+        self.add_new(ItemGroup.combine(g1, g2, *args, **kwargs))
+
+    def move_entry(self, *args, **kwargs):
+        return utils.list_move_entry(self.groups, *args, **kwargs)
+
+### Counting
 
 class ItemEntryData(object):
     def __init__(self, serial='', category_num='', other=''):
