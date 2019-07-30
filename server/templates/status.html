@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block content %}
+        <article class="media content-section">
+            <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">ID</th>
+                    <th scope="col">Connected</th>
+                    <th scope="col">Trustworthiness</th>
+                  </tr>
+                </thead>
+                <tbody id="devices_tb">
+                    {% for dev in devices %}
+                    <tr>
+                        <td scope="col"> {{ loop.index }} </td>
+                        {% for val in dev %}
+                            <td scope="col" class="{{val.lower()}}"> {{val}} </td>
+                        {% endfor %}
+                    </tr>
+                    {% endfor %}
+                </tbody>
+              </table>
+        </article>
+
+        <table id="showData"></table>
+<script src="/static/backend.js"></script>
+{% endblock content %}

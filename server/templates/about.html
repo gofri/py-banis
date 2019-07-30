@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content %}
+    {% for person in team %}
+        <article class="media content-section">
+          <div class="media-body">
+            <div class="article-metadata">
+              <a class="mr-2" href="#">{{ person.name }}</a>
+             
+            </div>
+            
+            <p class="article-content">A little bit information about each other</p>
+          </div>
+        </article>
+    {% endfor %}
+{% endblock content %}

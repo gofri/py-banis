@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content %}
+    {% for device in devices %}
+        <article class="media content-section">
+          <div class="media-body">
+            <div class="article-metadata">
+                <a class="mr-2" href="#">{{ devices}}</a>
+              <small class="text-muted">{{ device.threshold }}</small>
+            </div>
+            <h2><a class="article-title" href="#">{{ device.is_good}}</a></h2>
+            <p class="article-content">{{ device.is_connected }}</p>
+          </div>
+        </article>
+    {% endfor %}
+{% endblock content %}
