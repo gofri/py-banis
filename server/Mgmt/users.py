@@ -1,5 +1,14 @@
 #!/usr/bin/python3.6
 # encoding: utf-8
+class Perms(object):
+    NAMES = ["guest", "user", "admin"]
+    GUEST = 0
+    USER = 1
+    ADMIN = 2
+
+    @classmethod
+    def sanity_check(cls, perm):
+        assert 0 <= perm < len(Perms.NAMES) 
 
 class User(object):
     def __init__(self, name='', pwd='', locked_objs=None):
