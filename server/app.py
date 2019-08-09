@@ -1,7 +1,7 @@
 #!/usr/bin/python3.6
 # encoding: utf-8
 
-from flask import Flask, render_template
+from flask import Flask, request
 from Mgmt.Pages.home import Home
 
 from Mgmt.users import Perms
@@ -15,7 +15,7 @@ app = Flask(__name__)
 def home():
     return Home(Perms.GUEST).html()
 
-@app.route('/login')
+@app.route('/login', methods=['GET'])
 def login():
     return Login(Perms.GUEST).html()
 

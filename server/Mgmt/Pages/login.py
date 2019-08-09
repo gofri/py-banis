@@ -4,12 +4,14 @@
 import copy
 from Mgmt.users import Perms
 from Mgmt.Gui import generator as Generator
-from flask import render_template
+from flask import render_template, request
 
 class Login(object):
     def __init__(self, perm):
         self.perm = perm
-
+        self.url_args = request.args
+        self.content = self.Content(self.perm)
+        
     def html(self):
         return render_template('login.html', **self.content_dict())
     
@@ -23,7 +25,7 @@ class Login(object):
                 ]
             },
             Perms.USER: {
-                'form_prop': { 'submit_text':'התנתק',  }, 
+                'form_prop': { 'submit_text': 'התנתק',  }, 
             },
             Perms.ADMIN: {
                 'form_prop': { 'submit_text':'התנתק',  }, 
@@ -33,27 +35,22 @@ class Login(object):
         def __init__(self, perm):
             self.perm = perm
 
-        @property
-        def form(self):
-            return self.LAYOUT[self.perm]
+        def layout(self, perm=None):
+            return self.LAYOUT[perm or self.perm]
 
-        @property
-        def form_prop(self):
-            return self.form['form_prop']
+        def form_prop(self, perm=None):
+            return self.layout(perm)['form_prop']
         
-        @property
-        def submit_text(self):
-            return self.form_prop['submit_text']
+        def submit_text(self, perm=None):
+            return self.form_prop(perm)['submit_text']
 
-        @property
-        def inputs(self):
-            return self.form['inputs'] if 'inputs' in self.form.keys() else []
+        def inputs(self, perm=None):
+            return self.layout(perm).get('inputs', [])
 
-    def __form(self):
-        content = self.Content(self.perm)
-        html = Generator.generate_inputs(content.inputs)
+    def __layout(self):
+        html = Generator.generate_inputs(self.content.inputs)
         
-        return Generator.generate_form('login', content=html, submit_text=content.submit_text)
+        return Generator.generate_form('login', content=html, submit_text=self.content.submit_text)
     
     def content_dict(self):
-        return {'form': self.__form(), }
+        return {'layout': self.__layout(), }

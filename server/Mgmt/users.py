@@ -10,6 +10,7 @@ class Perms(object):
     def sanity_check(cls, perm):
         assert 0 <= perm < len(Perms.NAMES) 
 
+# TODO replace with flask-login
 class User(object):
     def __init__(self, name='', pwd='', locked_objs=None):
         self.name = name
@@ -30,4 +31,11 @@ class Users(object):
         for u in self.users:
             if obj in [l.pick_obj() for l in self.users.locked_objs]:
                 return u.name
+        return None
+
+    def get_user(self, name, passwd=None):
+        for u in self.users:
+            if u.name == name:
+                if (not passwd) or u.passwd == passwd:
+                    return u
         return None
