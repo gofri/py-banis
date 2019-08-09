@@ -12,31 +12,44 @@ class Login(object):
     class Content(object):
         LAYOUT = {
             Perms.GUEST: { 
-                'form': { 'submit_text':'התחבר',  }, 
-                'input': [
+                'form_prop': { 'submit_text':'התחבר',  }, 
+                'inputs': [
                     {'title':'שם משתמש',  'type':'text', 'name':'username', },
                     {'title':'סיסמה',  'type':'password', 'name':'password', },
                 ]
             },
             Perms.USER: {
-                'form': { 'submit_text':'התנתק',  }, 
+                'form_prop': { 'submit_text':'התנתק',  }, 
             },
             Perms.ADMIN: {
-                'form': { 'submit_text':'התנתק',  }, 
+                'form_prop': { 'submit_text':'התנתק',  }, 
             }, 
         }
 
-        def get_form(self, perm):
-            return copy.deepcopy(self.LAYOUT[perm])
+        def __init__(self, perm):
+            self.perm = perm
+
+        @property
+        def form(self):
+            return self.LAYOUT[self.perm]
+
+        @property
+        def form_prop(self):
+            return self.form['form_prop']
+        
+        @property
+        def submit_text(self):
+            return self.form_prop['submit_text']
+
+        @property
+        def inputs(self):
+            return self.form['inputs'] if 'inputs' in self.form.keys() else []
 
     def __form(self):
-        form = self.Content().get_form(self.perm)
-        submit_text = form['form']['submit_text']
+        content = self.Content(self.perm)
+        html = Generator.generate_inputs(content.inputs)
         
-        inputs = form.get('input', [])
-        content = Generator.generate_inputs(inputs)
-        
-        return Generator.generate_form('login', content=content, submit_text=submit_text)
+        return Generator.generate_form('login', content=html, submit_text=content.submit_text)
     
     def content_dict(self):
         return {'form': self.__form(), }
