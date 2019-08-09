@@ -4,10 +4,14 @@
 import copy
 from Mgmt.users import Perms
 from Mgmt.Gui import generator as Generator
+from flask import render_template
 
 class Login(object):
     def __init__(self, perm):
         self.perm = perm
+
+    def html(self):
+        return render_template('login.html', **self.content_dict())
     
     class Content(object):
         LAYOUT = {
