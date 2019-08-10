@@ -43,8 +43,8 @@ def generate_inputs(props, fill_gaps=True):
 
     return join_lines(formatted(fix_defaults(input_props, fill_gaps=fill_gaps)) for input_props in props)
 
-def generate_form(action='', content='', submit_text='שלח'):
-    return  f'<form action="{action}">' + \
+def generate_form(action='', content='', submit_text='שלח', method='get'):
+    return  f'<form action="{action}" method="{method}">' + \
             content + \
             f'<input type="submit" name="submit" value="{submit_text}">' + \
             '</form>'

@@ -35,4 +35,4 @@ class Home(object):
         return Generator.generate_buttons(self.Content().get_sub_pages(self.perm))
     
     def content_dict(self):
-        return {'buttons': self.__buttons(), }
+        return {'layout': self.__buttons(), }

@@ -15,7 +15,7 @@ app = Flask(__name__)
 def home():
     return Home(Perms.GUEST).html()
 
-@app.route('/login', methods=['GET'])
+@app.route('/login', methods=['GET', 'POST'])
 def login():
     return Login(Perms.GUEST).html()
 

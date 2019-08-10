@@ -48,9 +48,9 @@ class Login(object):
             return self.layout(perm).get('inputs', [])
 
     def __layout(self):
-        html = Generator.generate_inputs(self.content.inputs)
+        html = Generator.generate_inputs(self.content.inputs())
         
-        return Generator.generate_form('login', content=html, submit_text=self.content.submit_text)
+        return Generator.generate_form('login', content=html, submit_text=self.content.submit_text(), method='post')
     
     def content_dict(self):
         return {'layout': self.__layout(), }
