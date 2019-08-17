@@ -4,8 +4,10 @@
 from flask import Flask, request
 from Mgmt.Pages.home import Home
 
-from Mgmt.users import Perms
-from Mgmt.Pages.login import Login
+from Mgmt.auth import Perms, Auth
+from Mgmt.Pages.login import LoginPage
+from Mgmt.Pages.admin_panel import AdminPanel
+from Mgmt.Pages.admin_items import AdminItems
 
 
 app = Flask(__name__)
@@ -17,7 +19,16 @@ def home():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    return Login(Perms.GUEST).html()
+    return LoginPage(request).html()
+
+@app.route('/admin_panel')
+def admin_panel():
+    return AdminPanel().html()
+
+@app.route('/admin_items')
+def admin_items():
+    return AdminItems().html()
 
 if __name__ == "__main__":
+    auth = Auth(app)
     app.run(debug=True, use_reloader=False)
