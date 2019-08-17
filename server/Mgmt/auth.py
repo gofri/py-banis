@@ -51,7 +51,6 @@ class Auth(object, metaclass=Singleton):
                 return u
         return None
 
-
 class User(UserMixin):
     def __init__(self, name='', passwd='', admin=None):
         self.name = name

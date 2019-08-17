@@ -10,7 +10,6 @@ class HomePage(object):
         self.request = request
     
     def html(self):
-        print(current_user.name, current_user.perm)
         return Home(current_user.perm).html()
 
 class Home(object):

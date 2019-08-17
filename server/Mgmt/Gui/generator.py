@@ -25,7 +25,7 @@ def generate_buttons(props, fill_gaps=True):
 def generate_inputs(props, fill_gaps=True):    
     TEMPLATE = '<div class="ui-field-contain">' + \
                 '<label for="{name}">{title}</label>' + \
-                '<input type="{type}" name="{name}" id="{name}" value="{default}">' + \
+                '<input type="{type}" name="{name}" value="{default}">' + \
                 '</div>'
     DEFAULT = {'title':'', 'name':'', 'default':'', 'type':'text'}
 

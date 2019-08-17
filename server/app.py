@@ -17,8 +17,6 @@ app = Flask(__name__)
 @app.route('/')
 @app.route('/index')
 def index():
-    print("Redirected to index")
-    print(current_user.name)
     return HomePage(request).html()
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -44,4 +42,3 @@ def load_user(user_id):
 if __name__ == "__main__":
     auth = Auth(app, login_mngr)
     app.run(debug=True, use_reloader=False)
-

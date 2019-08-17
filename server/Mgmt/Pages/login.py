@@ -32,10 +32,10 @@ class LoginPage(object):
                     assert user, 'Invalid user or password'
                     
                     user = auth.User(**user)
-                    assert user not in self.app.config['USERS'], 'Already logged in'
-                     
                     assert login_user(user), "Unexpectedly failed to login"
-                    self.app.config['USERS'] += [user]
+
+                    if user not in self.app.config['USERS']: 
+                        self.app.config['USERS'].append(user)
                     
                     self.next = 'index'
                 except Exception as e:
@@ -48,10 +48,8 @@ class LoginPage(object):
 
     def html(self):
         if self.next:
-            print("redirecting to index from " + str(current_user.name))
             return flask.redirect(flask.url_for(self.next))
         else:
-            print("show default for " + str(current_user.name))
             return Login(current_user.perm).html()
 
 class Login(object):
@@ -64,7 +62,6 @@ class Login(object):
 
     def __layout(self):
         html = Generator.generate_inputs(self.content.inputs())
-        
         return Generator.generate_form('login', content=html, submit_text=self.content.submit_text(), method='post')
     
     def __content_dict(self):
@@ -77,6 +74,7 @@ class Login(object):
                 'inputs': [
                     {'title':'שם משתמש',  'type':'text', 'name':'username', },
                     {'title':'סיסמה',  'type':'password', 'name':'password', },
+                    {'title':'נתק משתמש זה ממכשירים אחרים (ניתן להתחבר ממכשיר אחד במקביל)',  'type':'checkbox', 'name':'kickout', 'default':'kickout'},
                 ]
             },
             {
