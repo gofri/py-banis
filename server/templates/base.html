@@ -18,6 +18,9 @@
     {% endif %}
 </head>
 <body>
-{% block content %}{% endblock %}
+<div data-role="page" data-url="{{ request.url }}">
+    <div class="flashes">{{ get_flashed_messages() }}</div>
+    {% block content %}{% endblock %}
 </body>
+</div>
 </html>

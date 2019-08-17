@@ -2,11 +2,12 @@
 # encoding: utf-8
 import flask
 
-users = [{'_id': 0, 'name':'avner', 'passwd':'papabani', 'admin':True},
-         {'_id': 1, 'name':'omri', 'passwd':'kidbani', 'admin':True},
-         {'_id': 2, 'name':'omrimor', 'passwd':'badboy', 'admin':False},]
+users = [{'name':'avner', 'passwd':'papabani', 'admin':True},
+         {'name':'omri', 'passwd':'kidbani', 'admin':True},
+         {'name':'omrimor', 'passwd':'badboy', 'admin':False},]
 
 def get_user(name, passwd=''):
+    global users
     for u in users:
         if u['name'] == name and (not passwd or passwd == u['passwd']):
             return u
@@ -15,7 +16,10 @@ def get_user(name, passwd=''):
         return None
     
 def get_user_by_id(user_id):
-    try:
-        return users[user_id] # id == index
-    except Exception:
-        return None
+    global users
+    for u in users:
+        if u['name'] == user_id:
+            return u
+
+    flask.flash("No user found")
+    return None

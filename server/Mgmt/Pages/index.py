@@ -3,6 +3,15 @@
 
 from Mgmt.Gui import generator as Generator
 from flask import render_template
+from flask_login.utils import current_user
+
+class HomePage(object):
+    def __init__(self, request):
+        self.request = request
+    
+    def html(self):
+        print(current_user.name, current_user.perm)
+        return Home(current_user.perm).html()
 
 class Home(object):
     def __init__(self, perm):

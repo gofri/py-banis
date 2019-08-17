@@ -11,25 +11,11 @@ from flask_login.login_manager import LoginManager
 from Mgmt import auth
 from IPython.nbformat import current
 
-#         # Login and validate the user.
-#         # user should be an instance of your `User` class
-#         login_user(user)
-# 
-#         flask.flash('Logged in successfully.')
-# 
-#         next = flask.request.args.get('next')
-#         # is_safe_url should check if the url is safe for redirects.
-#         # See http://flask.pocoo.org/snippets/62/ for an example.
-#         if not is_safe_url(next):
-#             return flask.abort(400)
-# 
-#         return flask.redirect(next or flask.url_for('index'))
-#     return flask.render_template('login.html', form=form)
-
 class LoginPage(object):
-    def __init__(self, request):
+    def __init__(self, request, app):
         self.request = request
         self.next = None
+        self.app = app
         self.check_form_submittion()
 
     def check_form_submittion(self):
@@ -40,25 +26,32 @@ class LoginPage(object):
                 try:
                     name = form.get('username')
                     passwd = form.get('password')
-                    assert name.strip() and passwd.strip(), "empty name/pass"
+                    assert name.strip() and passwd.strip(), "Empty name or password"
                     
-                    real_user = usersDL.get_user(name, passwd)
-                    assert real_user, 'No such user'
-                    real_user = auth.User(**real_user)
-                    login_user(real_user)
-                    self.next = flask.request.args.get('next')
+                    user = usersDL.get_user(name, passwd)
+                    assert user, 'Invalid user or password'
+                    
+                    user = auth.User(**user)
+                    assert user not in self.app.config['USERS'], 'Already logged in'
+                     
+                    assert login_user(user), "Unexpectedly failed to login"
+                    self.app.config['USERS'] += [user]
+                    
+                    self.next = 'index'
                 except Exception as e:
                     flask.flash('ERROR:' + str(e))
-
             elif 'התנתק' in submit:
+                self.app.config['USERS'].remove(current_user)
                 logout_user()
             else:
                 print('wtf?!' + submit)
 
     def html(self):
         if self.next:
-            return flask.redirect(self.next)
+            print("redirecting to index from " + str(current_user.name))
+            return flask.redirect(flask.url_for(self.next))
         else:
+            print("show default for " + str(current_user.name))
             return Login(current_user.perm).html()
 
 class Login(object):
