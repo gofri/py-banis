@@ -2,6 +2,7 @@
 # encoding: utf-8
 
 from Core import item
+from Core.logicalock import Ownership
 
 class Site(object):
     class SiteInfo(object):
@@ -11,7 +12,7 @@ class Site(object):
     def __init__(self, info=None, zone=None):
         self.info = info or self.SiteInfo()
         self.zone = zone or Zone()
-        
+
 class Zone(object):
     class ZoneInfo(object):
         def __init__(self, item_counting=None, desc='', gps_location=None, icon=None):
@@ -26,7 +27,6 @@ class Zone(object):
         self.sub_zones = sub_zones or []
 
     def add_sub_zone(self, zone=None):
-        assert self.allowed_sub_zones(), 'Cannot add sub zones because there are assigned items'
         self.sub_zones.append(zone or Zone())
 
     def add_sub_zones(self, sub_zones=None):
@@ -35,17 +35,10 @@ class Zone(object):
 
     @property
     def items_counting(self):
-        assert self.allowed_items(), 'Cannot handle items because there are assigned sub zones'
         return self.info.item_counting
 
     def is_leaf(self):
         return len(self.sub_zones) == 0
-
-    def allowed_items(self):
-        return self.is_leaf()
-
-    def allowed_sub_zones(self):
-        return self.info.item_counting.count() == 0
     
 class ZoneWizard(object):
     @classmethod

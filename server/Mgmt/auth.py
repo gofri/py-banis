@@ -4,7 +4,6 @@ from flask_login import LoginManager, current_user
 from flask_login.mixins import UserMixin, AnonymousUserMixin
 from DL import users as usersDL
 import flask_login
-from padme import metaclass
 from Core.singleton import Singleton
 
 class Perms(object):
@@ -49,6 +48,7 @@ class Auth(object, metaclass=Singleton):
         for u in self.app.config['USERS']:
             if u.name == user_id:
                 return u
+
         return None
 
 class User(UserMixin):

@@ -12,6 +12,9 @@ from flask_login.utils import login_required, current_user
 from flask_login.login_manager import LoginManager
 from Mgmt.utils import admin_required
 
+# TODO replace with real db
+from DL import users
+
 app = Flask(__name__)
 
 @app.route('/')
@@ -41,4 +44,7 @@ def load_user(user_id):
 
 if __name__ == "__main__":
     auth = Auth(app, login_mngr)
+    # TODO db = DB(app, ...)
+    app.config['DL'] = {}
+    app.config['DL']['USERS'] = users.UsersDL()
     app.run(debug=True, use_reloader=False)

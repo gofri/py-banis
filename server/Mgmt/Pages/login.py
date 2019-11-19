@@ -5,17 +5,17 @@ from Mgmt.auth import Perms
 from Mgmt.Gui import generator as Generator
 import flask
 from flask import render_template
-from DL import users as usersDL
 from flask_login.utils import current_user, login_user, logout_user
 from flask_login.login_manager import LoginManager
 from Mgmt import auth
-from IPython.nbformat import current
 
 class LoginPage(object):
     def __init__(self, request, app):
         self.request = request
         self.next = None
         self.app = app
+        self.usersDL = self.app.config['DL']['USERS']
+        
         self.check_form_submittion()
 
     def check_form_submittion(self):
@@ -28,7 +28,7 @@ class LoginPage(object):
                     passwd = form.get('password')
                     assert name.strip() and passwd.strip(), "Empty name or password"
                     
-                    user = usersDL.get_user(name, passwd)
+                    user = self.usersDL.get_user(name, passwd)
                     assert user, 'Invalid user or password'
                     
                     user = auth.User(**user)
@@ -44,7 +44,7 @@ class LoginPage(object):
                 self.app.config['USERS'].remove(current_user)
                 logout_user()
             else:
-                print('wtf?!' + submit)
+                print('wtf?!-' + submit + '-')
 
     def html(self):
         if self.next:
