@@ -1,0 +1,37 @@
+Home:
+	1. Customers
+	2. Items
+	3. Counts
+	4. Login/Admin/etc.
+
+1. Customers
+	< view CUSTOMERs list >
+	1. new customer (standard)
+	2. filter by:
+		1. customer
+		2. site
+	3. select customer [go to # CUSTOMER page]:
+		< view CUSTOMER details: >
+			< desc >
+			< sites: >
+				1. filter by:
+					1. name
+				2. select site [go to # SITE page]:
+					< desc >
+					< view SITE details: >
+						< counts [sort by date] >
+							1. select count [go to # COUNT page]:	
+								< view COUNT details: >
+									< summary >
+									< zone hierarchy >
+				3. new site 
+					1. standard
+					2. do not forget importing item-pack
+														
+			< edit customer: >
+				edit each field (name / pic / etc.)
+			< disable customer [never delete to avoid risk] >
+
+
+2. Items
+	< view ITEM packs >
