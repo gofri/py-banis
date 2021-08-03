@@ -1,6 +1,5 @@
-#!/usr/bin/python3.6
+#!/usr/bin/python3
 # encoding: utf-8
-
 from flask import Flask, request
 from Mgmt.Pages.index import HomePage
 
