@@ -16,7 +16,7 @@ class UsersDL(object):
     
     def add_user(self, name, passwd, admin):
         if self.get_user(name):
-            flask.flash('user already exist')
+            flask.flash('user already exists')
         else:
             self._users.append({'name':name, 'passwd':passwd, 'admin':admin})
     

@@ -4,6 +4,7 @@
 from . import utils
 
 def ItemType():
+    ''' A unique item type. '''
     def __init__(self, name='', icon=None, desc=''):
         self.name = name
         self.icon = icon
@@ -12,6 +13,7 @@ def ItemType():
 ### Grouping
 
 class ItemGroup(object):
+    ''' A collection of items. '''
     def __init__(self, name='', entries=None):
         self.name = name
         self.entries = entries or []
@@ -23,7 +25,8 @@ class ItemGroup(object):
     def combine(cls, g1, g2, new_name=''):
         return cls(name=new_name, entries=utils.unique_combine(g1.entries, g2.entries))
 
-class CommonItems(object):
+class ItemMultiGroup(object):
+    ''' A collection of groups. '''
     def __init__(self, groups=None):
         self.groups = groups or []
 
@@ -44,12 +47,14 @@ class CommonItems(object):
 ### Counting
 
 class ItemEntryData(object):
+    ''' The data of a single item. '''
     def __init__(self, serial='', category_num='', other=''):
         self.serial = serial
-        self.category_num = category_num
+        self.category_num = category_num # TODO TBD: does category belong to ItemType?
         self.other = other
 
-class AtomicItemCounting(object):
+class ItemCountingEntry(object):
+    ''' A single entry of an item. '''
     def __init__(self, type_guid=None, entries=None, note=''):
         self.type = type_guid 
         self.entries = entries or []

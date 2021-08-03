@@ -5,6 +5,7 @@ from Core import item
 from Core.logicalock import Ownership
 
 class Site(object):
+    ''' A single site (e.g. school). '''
     class SiteInfo(object):
         def __init__(self):
             pass
@@ -14,6 +15,8 @@ class Site(object):
         self.zone = zone or Zone()
 
 class Zone(object):
+    ''' A zone within a site.
+        Zones are practically tree nodes (e.g. school->floors->rooms). '''
     class ZoneInfo(object):
         def __init__(self, item_counting=None, desc='', gps_location=None, icon=None):
             self.item_counting = item_counting or item.AtomicItemCounting()
@@ -41,6 +44,7 @@ class Zone(object):
         return len(self.sub_zones) == 0
     
 class ZoneWizard(object):
+    ''' Handy helpers for zones creation. probably should be js but could be implemented in backend too. '''
     @classmethod
     def get_floor(cls, first_room=1, count=1, leap=1):
         return [Zone(str(room)) for room in \
