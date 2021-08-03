@@ -51,6 +51,7 @@ class Auth(object, metaclass=Singleton):
 
         return None
 
+# TODO load usersDL into this type
 class User(UserMixin):
     def __init__(self, name='', passwd='', admin=None):
         self.name = name

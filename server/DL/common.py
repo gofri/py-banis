@@ -18,8 +18,9 @@ class DB(object):
         assert create_if_new or name in self.db.list_collection_names()
         return self.db[name]
 
-    def set(self, collection, key, value, create_if_new=True):
+    def insert(self, collection, key, value, create_if_new=True):
         assert create_if_new or key in self.db.list_collection_names()
+        self.db.get_collection(collection).insert({key:value})
 
     @classmethod
     def ins(cls):

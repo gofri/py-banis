@@ -1,11 +1,12 @@
  #!/usr/bin/python3.6
 # encoding: utf-8
 import flask
+from DL.common import DB
 
 class UsersDL(object):
     def __init__(self):
         self._users = None
-
+        self.collection_key = 'USERS'
         self._load_users()
     
     def _load_users(self):

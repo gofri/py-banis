@@ -3,11 +3,11 @@
 
 from Mgmt.Gui import generator as Generator
 from flask import render_template
-from DL.admin_items import fetch_items as fetch_items_from_db
+from DL.admin_items import fetch_items, put_items
 
 class AdminItems(object):
     def __init__(self):
-        items = fetch_items_from_db()
+        pass
 
     def html(self):
         return render_template('admin_items.html', **self.__content_dict())
