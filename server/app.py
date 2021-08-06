@@ -7,6 +7,7 @@ from Mgmt.auth import Perms, Auth
 from Mgmt.Pages.login import LoginPage
 from Mgmt.Pages.admin_panel import AdminPanel
 from Mgmt.Pages.admin_items import AdminItems
+from Mgmt.Pages.admin_customers import Customers
 from flask_login.utils import login_required, current_user
 from flask_login.login_manager import LoginManager
 from Mgmt.utils import admin_required
@@ -34,6 +35,11 @@ def admin_panel():
 @admin_required
 def admin_items():
     return AdminItems().html()
+
+@app.route('/admin_customers')
+@admin_required
+def adminc_customers():
+    return Customers().html()
 
 login_mngr  = LoginManager()
 

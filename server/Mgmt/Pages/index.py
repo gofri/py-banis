@@ -4,6 +4,7 @@
 from Mgmt.Gui import generator as Generator
 from flask import render_template
 from flask_login.utils import current_user
+import flask_login
 
 class HomePage(object):
     def __init__(self, request):
@@ -29,9 +30,10 @@ class Home(object):
         SUB_PAGES = [
             [ {'title':'התחבר',  'href':'login', }, ], # GUEST
             [ {'title':'ספירות פעילות',  'href':'active_counts', }, ], # USER
-            [ {'title':'ספירות פעילות',  'href':'active_counts', }, # ADMIN
-              {'title':'פאנל ניהול',  'href':'admin_panel', } ],
+            [ {'title':'פאנל ניהול',  'href':'admin_panel', }, ], # ADMIN
         ]
 
         def sub_pages(self, perm):
+            if perm == 2: # admin
+                return self.SUB_PAGES[perm-1] + self.SUB_PAGES[perm]
             return self.SUB_PAGES[perm]
