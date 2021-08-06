@@ -26,12 +26,42 @@ Home:
 									< zone hierarchy >
 				3. new site 
 					1. standard
-					2. do not forget importing item-pack
+					2. import item pack
+					3. import item [IMPORT SINGLE ITEM dialog]
+					4. new item [NEW ITEM dialog]
 														
 			< edit customer: >
 				edit each field (name / pic / etc.)
-			< disable customer [never delete to avoid risk] >
+			< enable/disable customer [never delete to avoid risk] >
 
 
 2. Items
-	< view ITEM packs >
+	< view ITEMs >
+		1. filter by:
+			1. name
+		2. select item [ITEM dialog]
+			< ITEM dialog >
+				1. edit
+				2. clone
+				3. add to packs
+		3. new item
+	< view ITEM PACKs >
+		1. filter by:
+			1. name
+			2. item within it
+		2. select item pack [go to # ITEM PACK PAGE]
+			< view ITEM PACK >
+				1. edit
+				2. clone
+				3. new item [IMPORT ITEM dialog]
+				4. import item [IMPORT SINGLE ITEM dialog]
+				5. import from item pack [IMPORT ITEMS dialog]
+					< IMPORT ITEMS dialog >	
+						1. 	select item pack -> 
+							list items [checkboxes=checked] ->
+							let user edit ->
+							submit
+		3. new item pack
+
+
+3. Counts
