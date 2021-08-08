@@ -3,6 +3,7 @@
 from flask import Flask, request
 from Mgmt.Pages.index import HomePage
 from flask_cors import CORS
+from api.loader import APILoader
 
 from Mgmt.auth import Perms, Auth
 from Mgmt.Pages.login import LoginPage
@@ -58,4 +59,7 @@ if __name__ == "__main__":
     # TODO db = DB(app, ...)
     app.config['DL'] = {}
     app.config['DL']['USERS'] = users.UsersDL()
+    
+    APILoader(app).add_api_endpoints()
+    
     app.run(debug=True, use_reloader=False)

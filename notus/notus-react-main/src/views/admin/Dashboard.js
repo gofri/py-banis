@@ -22,6 +22,7 @@ console.log(response)
 });
 	*/
 	const items = new APIClient().backend().then(function(items) { console.log(items.a); });
+	new APIClient().customers().then(function(items) { console.log(items); });
 
   return (
     <>

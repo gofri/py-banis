@@ -27,6 +27,9 @@ class APIClient {
         return this.perform('get', '/backend');
     }
 
+    customers() {
+        return this.perform('get', '/api/customers');
+    }
     async perform (method, resource, data) {
         return client({
             method,
