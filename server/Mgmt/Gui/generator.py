@@ -5,8 +5,8 @@ def join_lines(data):
     return '<br>'.join(data)
 
 def generate_buttons(props, fill_gaps=True):
-    TEMPLATE = '<a href="{href}" class="ui-btn">{title}</a>'
-    DEFAULT = {'href':'#', 'title':''}
+    TEMPLATE = '<a href="{href}" id={id} class="ui-btn">{title}</a>'
+    DEFAULT = {'href':'#', 'title':'', 'id':''}
     
     def fix_defaults(but_props, fill_gaps):
         if not fill_gaps: 

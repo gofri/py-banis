@@ -1,1 +1,6 @@
-{% include 'default.html' %}
+{% extends "base.html" %}
+
+{% block content %}
+{{ new_customer_button|safe }}
+{% include 'datatable.html' %}
+{% endblock content %}

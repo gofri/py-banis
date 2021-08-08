@@ -2,6 +2,7 @@
 # encoding: utf-8
 from flask import Flask, request
 from Mgmt.Pages.index import HomePage
+from flask_cors import CORS
 
 from Mgmt.auth import Perms, Auth
 from Mgmt.Pages.login import LoginPage
@@ -16,6 +17,7 @@ from Mgmt.utils import admin_required
 from DL import users
 
 app = Flask(__name__)
+CORS(app)
 
 @app.route('/')
 @app.route('/index')
@@ -42,6 +44,10 @@ def adminc_customers():
     return Customers().html()
 
 login_mngr  = LoginManager()
+
+@app.route('/backend')
+def backend():
+    return {'k':'v', 'a':1}
 
 @login_mngr.user_loader
 def load_user(user_id):
