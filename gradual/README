@@ -1,0 +1,42 @@
+Product:
+    Product details {
+        ...
+    }
+    Type {
+        countable
+        barcoded
+    }
+
+CatalogProduct:
+    Product (either barcoded or countable)
+    switch type:
+        countable: default_count, count
+        barcoded: barcode [pop from running Barcode (editable afterwards)]
+
+Catalog:
+    {name:CatalogProduct}
+
+
+RunningBarcode:
+    str letters (optional)
+    uint number
+        
+    __str__(): f'{letters}{number}
+
+--
+
+Site:
+    {name:Site}
+    switch type:
+        Parent
+        Leaf
+
+Leaf:
+    Catalog
+
+CountEvent:
+    str name
+    str date
+    Site 
+    Catalog
+    RunningBarcode
